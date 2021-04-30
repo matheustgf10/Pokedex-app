@@ -1,9 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:pokedex_app/app/modules/pokemon_info/pages/pokemon_info_app_bar.dart';
 import 'package:pokedex_app/app/modules/pokemon_info/pages/pokemon_info_body.dart';
 import 'package:pokedex_app/app/modules/pokemon_info/pages/pokemon_info_header.dart';
 import 'package:pokedex_app/app/modules/pokemon_info/pages/pokemon_info_thumbnail.dart';
+import 'package:pokedex_app/app/modules/pokemon_info/pokemon_info_store.dart';
 import 'package:pokedex_app/app/shared/model/Pokemon.dart';
 import 'package:pokedex_app/app/shared/pages/spinned_pokeball.dart';
 
@@ -21,7 +24,8 @@ class PokemonInfoWidget extends StatefulWidget {
   _PokemonInfoWidgetState createState() => _PokemonInfoWidgetState();
 }
 
-class _PokemonInfoWidgetState extends State<PokemonInfoWidget> {
+class _PokemonInfoWidgetState
+    extends ModularState<PokemonInfoWidget, PokemonInfoStore> {
   final Pokemon pokemonMock = Pokemon(
       id: '#001',
       name: 'Bulbasaur',
@@ -89,8 +93,9 @@ class _PokemonInfoWidgetState extends State<PokemonInfoWidget> {
                   itemCount: 4,
                   itemBuilder: (BuildContext context, int index, int i) =>
                       Container(
-                    child:
-                        PokemonInfoThumbnail(pokemonName: pokemonNames[index]),
+                    child: PokemonInfoThumbnail(
+                      pokemonName: pokemonNames[index],
+                    ),
                   ),
                   options: CarouselOptions(
                     height: 200,

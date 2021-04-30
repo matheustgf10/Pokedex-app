@@ -64,27 +64,26 @@ class _PokedexWidgetState extends State<PokedexWidget> {
                 style: TextStyle(fontSize: 28, fontWeight: FontWeight.w700),
               ),
             ),
-            Container(
-              alignment: Alignment.topLeft,
-              margin: EdgeInsets.only(top: 10),
-              height: 700,
-              child: MediaQuery.removePadding(
-                context: context,
-                removeTop: true,
-                child: GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                    ),
-                    itemCount: _pokemons?.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Hero(
-                          tag: 'dash' + index.toString(),
-                          child: pokemonCard(
-                            pokemon: _pokemons?[index],
-                            index: index,
-                          ));
-                    }),
+            Expanded(
+              child: Container(
+                margin: EdgeInsets.only(top: 10),
+                child: MediaQuery.removePadding(
+                  context: context,
+                  removeTop: true,
+                  removeBottom: true,
+                  child: GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                      ),
+                      itemCount: _pokemons?.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return pokemonCard(
+                          pokemon: _pokemons?[index],
+                          index: index,
+                        );
+                      }),
+                ),
               ),
             ),
           ],
@@ -94,121 +93,119 @@ class _PokedexWidgetState extends State<PokedexWidget> {
   }
 
   Widget pokemonCard({Pokemon? pokemon, int? index}) {
-    return Material(
+    return Container(
+      color: Colors.blue,
       child: InkWell(
         onTap: () {
           Modular.to.pushNamed('/pokemonInfo', arguments: index.toString());
         },
         child: Container(
-          margin: EdgeInsets.all(5),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20),
-            child: Container(
-              padding: EdgeInsets.all(5),
-              height: 140,
-              width: 180,
-              decoration: BoxDecoration(
-                color: pokemon?.colorType ?? COLOR_POKEMON_TYPE_NORMAL,
-              ),
-              child: Stack(
-                children: [
-                  Container(
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              alignment: Alignment.topLeft,
-                              margin: EdgeInsets.only(left: 5, top: 10),
-                              child: Text(
-                                pokemon?.name ?? 'POKEMON_NAME',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w800,
+          child: Stack(
+            children: [
+              Container(
+                margin: EdgeInsets.all(5),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                    padding: EdgeInsets.all(5),
+                    height: 160,
+                    width: 230,
+                    decoration: BoxDecoration(
+                      color: pokemon?.colorType ?? COLOR_POKEMON_TYPE_NORMAL,
+                    ),
+                    child: Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(left: 5, top: 10),
+                                child: Text(
+                                  pokemon?.name ?? 'POKEMON_NAME',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w800,
+                                  ),
                                 ),
                               ),
-                            ),
-                            Spacer(),
-                            Container(
-                              alignment: Alignment.topRight,
-                              margin: EdgeInsets.only(top: 10, right: 5),
-                              child: Text(
-                                pokemon?.id ?? '#000',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w800,
+                              Spacer(),
+                              Container(
+                                margin: EdgeInsets.only(top: 10, right: 5),
+                                child: Text(
+                                  pokemon?.id ?? '#000',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.white38,
+                                    fontWeight: FontWeight.w800,
+                                  ),
                                 ),
                               ),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          Flexible(
+                            child: Container(
+                              width: 100,
+                              height: 150,
+                              child: ListView.builder(
+                                  padding: EdgeInsets.all(0),
+                                  physics: ScrollPhysics(
+                                      parent: NeverScrollableScrollPhysics()),
+                                  itemCount: pokemon?.types?.length ?? 1,
+                                  itemBuilder: (context, int index) {
+                                    return Container(
+                                      width: 100,
+                                      margin: EdgeInsets.only(bottom: 5),
+                                      decoration: BoxDecoration(
+                                        color:
+                                            Color.fromRGBO(255, 255, 255, 0.2),
+                                        border: Border.all(
+                                          color: Colors.transparent,
+                                          width: 5,
+                                        ),
+                                        borderRadius: BorderRadius.circular(60),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          pokemon?.types?[index] ?? 'TYPE',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w800),
+                                        ),
+                                      ),
+                                    );
+                                  }),
                             ),
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                        Container(
-                          width: 180,
-                          height: 100,
-                          color: Colors.amber,
-                          child: ListView.builder(
-                              padding: EdgeInsets.all(0),
-                              physics: ScrollPhysics(
-                                  parent: NeverScrollableScrollPhysics()),
-                              itemCount: pokemon?.types?.length ?? 1,
-                              itemBuilder: (context, int index) {
-                                return Container(
-                                  width: 100,
-                                  padding: EdgeInsets.only(
-                                      top: 5, bottom: 5, left: 10, right: 10),
-                                  margin: EdgeInsets.only(bottom: 5),
-                                  decoration: BoxDecoration(
-                                    color: Color.fromRGBO(255, 255, 255, 0.2),
-                                    border: Border.all(
-                                      color: Colors.transparent,
-                                      width: 5,
-                                    ),
-                                    borderRadius: BorderRadius.circular(60),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      pokemon?.types?[index] ?? 'TYPE',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w800),
-                                    ),
-                                  ),
-                                );
-                              }),
-                        ),
-                      ],
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            right: 0,
+                            child: Stack(
+                              children: [
+                                Image.asset(
+                                  'lib/app/shared/assets/images/pokeball.png',
+                                  color: Color.fromRGBO(255, 255, 255, 0.2),
+                                  height: 110,
+                                ),
+                                Image.asset(
+                                  pokemon?.imageUrl ??
+                                      'lib/app/shared/assets/images/pokemon/bulbasaur.png',
+                                  // color: Color.fromRGBO(0, 0, 0, 0.8),
+                                  height: 110,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                  Positioned(
-                    bottom: -5,
-                    right: 0,
-                    child: Stack(
-                      children: [
-                        Container(
-                          child: Image.asset(
-                            'lib/app/shared/assets/images/pokeball.png',
-                            color: Color.fromRGBO(255, 255, 255, 0.2),
-                            height: 85,
-                          ),
-                        ),
-                        Container(
-                          child: Image.asset(
-                            pokemon?.imageUrl ??
-                                'lib/app/shared/assets/images/pokemon/bulbasaur.png',
-                            // color: Color.fromRGBO(0, 0, 0, 0.8),
-                            height: 80,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),
