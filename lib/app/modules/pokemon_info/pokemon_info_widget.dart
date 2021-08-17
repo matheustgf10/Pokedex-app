@@ -9,16 +9,18 @@ import 'package:pokedex_app/app/modules/pokemon_info/pages/pokemon_info_thumbnai
 import 'package:pokedex_app/app/modules/pokemon_info/pokemon_info_store.dart';
 import 'package:pokedex_app/app/shared/model/Pokemon.dart';
 import 'package:pokedex_app/app/shared/pages/spinned_pokeball.dart';
+import 'package:pokedex_app/app/utils/constants.dart';
 
 class PokemonInfoWidget extends StatefulWidget {
   final String title;
-  String? idHero;
-
-  PokemonInfoWidget({
-    Key? key,
-    this.title = "PokemonInfoWidget",
-    this.idHero,
-  }) : super(key: key);
+  late int id;
+  late Pokemon pokemon;
+  PokemonInfoWidget(
+      {Key? key,
+      this.title = "PokemonInfoWidget",
+      this.id = 0,
+      required this.pokemon})
+      : super(key: key);
 
   @override
   _PokemonInfoWidgetState createState() => _PokemonInfoWidgetState();
@@ -48,10 +50,11 @@ class _PokemonInfoWidgetState
 
   @override
   Widget build(BuildContext context) {
+    print('ID HERO:>>> ' + widget.id.toString());
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
-        color: Color.fromRGBO(34, 168, 126, 70),
+        color: widget.pokemon.colorType,
         child: Container(
           height: MediaQuery.of(context).size.height,
           child: Column(
@@ -79,14 +82,14 @@ class _PokemonInfoWidgetState
                           ),
                         ),
                         // ! Ativar futturamente
-                        // SpinnablePokeball(controller: _animationController),
+                        // SpinnedPokeball(controller: _animationController),
                       ],
                     ),
                   ),
                   PokemonInfoAppBar(),
                 ],
               ),
-              PokemonInfoHeader(pokemon: pokemonMock),
+              PokemonInfoHeader(pokemon: widget.pokemon),
               Spacer(),
               Container(
                 child: CarouselSlider.builder(
@@ -101,7 +104,7 @@ class _PokemonInfoWidgetState
                     height: 200,
                     aspectRatio: 16 / 9,
                     viewportFraction: 0.6,
-                    initialPage: 0,
+                    initialPage: widget.id,
                     enableInfiniteScroll: true,
                     reverse: false,
                     autoPlay: false,
@@ -115,7 +118,7 @@ class _PokemonInfoWidgetState
               ),
               Container(
                 alignment: Alignment.bottomCenter,
-                child: PokemonInfoBody(pokemon: pokemonMock),
+                child: PokemonInfoBody(pokemon: widget.pokemon),
               ),
             ],
           ),

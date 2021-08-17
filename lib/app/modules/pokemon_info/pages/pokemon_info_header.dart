@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pokedex_app/app/shared/model/Pokemon.dart';
 
 class PokemonInfoHeader extends StatelessWidget {
-  Pokemon? pokemon;
+  final Pokemon? pokemon;
 
   PokemonInfoHeader({this.pokemon});
 
@@ -14,7 +14,7 @@ class PokemonInfoHeader extends StatelessWidget {
         children: [
           Row(children: [
             Text(
-              'Bulbasaur',
+              pokemon!.name.toString(),
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 38,
@@ -23,7 +23,7 @@ class PokemonInfoHeader extends StatelessWidget {
             ),
             Spacer(),
             Text(
-              '#001',
+              pokemon!.id.toString(),
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 20,
@@ -46,7 +46,7 @@ class PokemonInfoHeader extends StatelessWidget {
                   borderRadius: BorderRadius.circular(60),
                 ),
                 child: Text(
-                  'Grass',
+                  pokemon!.types![0].toString(),
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -68,7 +68,7 @@ class PokemonInfoHeader extends StatelessWidget {
                   borderRadius: BorderRadius.circular(60),
                 ),
                 child: Text(
-                  'Poison',
+                  pokemon!.types![0].toString(),
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -77,7 +77,7 @@ class PokemonInfoHeader extends StatelessWidget {
               ),
               Spacer(),
               Text(
-                'Seed Pokemon',
+                pokemon!.description.toString(),
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,

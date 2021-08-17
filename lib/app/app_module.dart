@@ -23,6 +23,6 @@ class AppModule extends Module {
     ),
     // ChildRoute('/pokemonInfo',
     //     child: (_, args) => PokemonInfoWidget(idHero: args.data)),
-    ModuleRoute('/pokemonInfo', module: PokemonInfoModule()),
+    ModuleRoute('/pokemonInfo/', module: PokemonInfoModule()),
   ];
 }

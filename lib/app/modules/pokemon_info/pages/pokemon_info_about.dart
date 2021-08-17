@@ -24,7 +24,7 @@ class PokemonInfoAbout extends StatelessWidget {
                 color: Color.fromRGBO(255, 255, 255, 1),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey,
+                    color: Colors.grey.shade300,
                     offset: Offset(0, 0),
                     spreadRadius: 0,
                     blurRadius: 15,
@@ -61,6 +61,7 @@ class PokemonInfoAbout extends StatelessWidget {
           Container(
               child: Column(
             children: [
+              SizedBox(height: 10),
               Row(
                 children: [
                   Container(child: Text('Gender')),
@@ -84,6 +85,7 @@ class PokemonInfoAbout extends StatelessWidget {
                   Container(child: Text('12,5%')),
                 ],
               ),
+              SizedBox(height: 10),
               Row(
                 children: [
                   Container(child: Text('Egg Group')),
@@ -91,6 +93,7 @@ class PokemonInfoAbout extends StatelessWidget {
                   Container(child: Text('Monster')),
                 ],
               ),
+              SizedBox(height: 10),
               Row(
                 children: [
                   Container(child: Text('Egg Cycle')),

@@ -1,6 +1,6 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter/material.dart';
 import 'package:pokedex_app/app/modules/pokemon_info/pokemon_info_widget.dart';
+import 'package:pokedex_app/app/shared/model/Pokemon.dart';
 
 class PokemonInfoModule extends Module {
   @override
@@ -8,9 +8,11 @@ class PokemonInfoModule extends Module {
 
   @override
   final List<ModularRoute> routes = [
-    ChildRoute(
-      '/pokemonInfo',
-      child: (_, args) => PokemonInfoWidget(),
-    ),
+    ChildRoute('/pokemonInfo/:id', child: (_, args) {
+      return PokemonInfoWidget(
+        pokemon: args.data,
+        id: args.params['id'],
+      );
+    }),
   ];
 }
