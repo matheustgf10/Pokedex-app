@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
+import 'package:pokedex_app/app/shared/model/Pokemon.dart';
 
 part 'pokemon_info_store.g.dart';
 
@@ -10,7 +11,13 @@ abstract class _PokemonInfoStoreBase with Store {
   int value = 0;
 
   @observable
-  bool isFavorite = true;
+  late Pokemon? currentPokemon = Pokemon();
+
+  @observable
+  late List<Pokemon> listPokemons = [];
+
+  @observable
+  bool isFavorite = false;
 
   @action
   void increment() {

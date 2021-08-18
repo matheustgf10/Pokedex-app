@@ -8,10 +8,10 @@ class PokemonInfoModule extends Module {
 
   @override
   final List<ModularRoute> routes = [
-    ChildRoute('/pokemonInfo/:id', child: (_, args) {
+    ChildRoute('/:id', child: (_, args) {
       return PokemonInfoWidget(
         pokemon: args.data,
-        id: args.params['id'],
+        id: int.parse(args.params['id']),
       );
     }),
   ];

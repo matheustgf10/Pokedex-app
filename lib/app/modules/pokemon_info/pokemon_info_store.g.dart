@@ -24,6 +24,37 @@ mixin _$PokemonInfoStore on _PokemonInfoStoreBase, Store {
     });
   }
 
+  final _$currentPokemonAtom =
+      Atom(name: '_PokemonInfoStoreBase.currentPokemon');
+
+  @override
+  Pokemon? get currentPokemon {
+    _$currentPokemonAtom.reportRead();
+    return super.currentPokemon;
+  }
+
+  @override
+  set currentPokemon(Pokemon? value) {
+    _$currentPokemonAtom.reportWrite(value, super.currentPokemon, () {
+      super.currentPokemon = value;
+    });
+  }
+
+  final _$listPokemonsAtom = Atom(name: '_PokemonInfoStoreBase.listPokemons');
+
+  @override
+  List<Pokemon> get listPokemons {
+    _$listPokemonsAtom.reportRead();
+    return super.listPokemons;
+  }
+
+  @override
+  set listPokemons(List<Pokemon> value) {
+    _$listPokemonsAtom.reportWrite(value, super.listPokemons, () {
+      super.listPokemons = value;
+    });
+  }
+
   final _$isFavoriteAtom = Atom(name: '_PokemonInfoStoreBase.isFavorite');
 
   @override
@@ -68,6 +99,8 @@ mixin _$PokemonInfoStore on _PokemonInfoStoreBase, Store {
   String toString() {
     return '''
 value: ${value},
+currentPokemon: ${currentPokemon},
+listPokemons: ${listPokemons},
 isFavorite: ${isFavorite}
     ''';
   }

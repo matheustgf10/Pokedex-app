@@ -28,19 +28,6 @@ class PokemonInfoWidget extends StatefulWidget {
 
 class _PokemonInfoWidgetState
     extends ModularState<PokemonInfoWidget, PokemonInfoStore> {
-  final Pokemon pokemonMock = Pokemon(
-      id: '#001',
-      name: 'Bulbasaur',
-      types: ['Grass', 'Poison'],
-      description: '',
-      eggCycle: '',
-      eggGroup: '',
-      genderFemalePercent: '',
-      genderMalePercent: '',
-      height: '',
-      imageUrl: '',
-      weight: '');
-
   List<String> pokemonNames = [
     'bulbasaur',
     'ivysaur',
@@ -52,78 +39,88 @@ class _PokemonInfoWidgetState
   Widget build(BuildContext context) {
     print('ID HERO:>>> ' + widget.id.toString());
     return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        color: widget.pokemon.colorType,
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          child: Column(
-            children: [
-              Stack(
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: Row(
-                      children: [
-                        RotationTransition(
-                          turns: AlwaysStoppedAnimation(10 / 360),
-                          child: Image.asset(
-                            'lib/app/shared/assets/images/square.png',
-                            height: 130,
-                            color: Color.fromRGBO(255, 255, 255, 0.1),
+      body: Observer(builder: (_) {
+        return Container(
+          width: MediaQuery.of(context).size.width,
+          color: controller.currentPokemon!.colorType,
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              children: [
+                Stack(
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      child: Row(
+                        children: [
+                          RotationTransition(
+                            turns: AlwaysStoppedAnimation(10 / 360),
+                            child: Image.asset(
+                              'lib/app/shared/assets/images/square.png',
+                              height: 130,
+                              color: Color.fromRGBO(255, 255, 255, 0.1),
+                            ),
                           ),
-                        ),
-                        SizedBox(width: 100),
+                          SizedBox(width: 100),
+                          Container(
+                            child: Image.asset(
+                              'lib/app/shared/assets/images/dotted.png',
+                              height: 60,
+                              color: Color.fromRGBO(255, 255, 255, 0.1),
+                            ),
+                          ),
+                          // ! Ativar futturamente
+                          // SpinnedPokeball(controller: _animationController),
+                        ],
+                      ),
+                    ),
+                    PokemonInfoAppBar(),
+                  ],
+                ),
+                PokemonInfoHeader(pokemon: widget.pokemon),
+                Spacer(),
+                Container(
+                  child: CarouselSlider.builder(
+                    itemCount: 4,
+                    itemBuilder: (BuildContext context, int index, int i) =>
                         Container(
-                          child: Image.asset(
-                            'lib/app/shared/assets/images/dotted.png',
-                            height: 60,
-                            color: Color.fromRGBO(255, 255, 255, 0.1),
-                          ),
-                        ),
-                        // ! Ativar futturamente
-                        // SpinnedPokeball(controller: _animationController),
-                      ],
+                      child: PokemonInfoThumbnail(
+                        pokemonName: pokemonNames[index],
+                      ),
                     ),
-                  ),
-                  PokemonInfoAppBar(),
-                ],
-              ),
-              PokemonInfoHeader(pokemon: widget.pokemon),
-              Spacer(),
-              Container(
-                child: CarouselSlider.builder(
-                  itemCount: 4,
-                  itemBuilder: (BuildContext context, int index, int i) =>
-                      Container(
-                    child: PokemonInfoThumbnail(
-                      pokemonName: pokemonNames[index],
-                    ),
-                  ),
-                  options: CarouselOptions(
-                    height: 200,
-                    aspectRatio: 16 / 9,
-                    viewportFraction: 0.6,
-                    initialPage: widget.id,
-                    enableInfiniteScroll: true,
-                    reverse: false,
-                    autoPlay: false,
-                    autoPlayInterval: Duration(seconds: 3),
-                    autoPlayAnimationDuration: Duration(milliseconds: 800),
-                    autoPlayCurve: Curves.fastOutSlowIn,
-                    enlargeCenterPage: true,
-                    scrollDirection: Axis.horizontal,
+                    options: CarouselOptions(
+                        height: 180,
+                        aspectRatio: 16 / 9,
+                        viewportFraction: 0.6,
+                        initialPage: widget.id,
+                        enableInfiniteScroll: true,
+                        reverse: false,
+                        autoPlay: false,
+                        autoPlayInterval: Duration(seconds: 3),
+                        autoPlayAnimationDuration: Duration(milliseconds: 800),
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        enlargeCenterPage: true,
+                        scrollDirection: Axis.horizontal,
+                        onPageChanged: (int index, _) {
+                          //! ALTERAR POKEMON IN CONTROLLER COM index
+                          print(index);
+                          controller.currentPokemon =
+                              controller.listPokemons[index];
+
+                          print("POKEMON DENTRO DO CONTROLLER: " +
+                              controller.currentPokemon!.name.toString());
+                        }),
                   ),
                 ),
-              ),
-              Container(
-                alignment: Alignment.bottomCenter,
-                child: PokemonInfoBody(pokemon: widget.pokemon),
-              ),
-            ],
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  child: PokemonInfoBody(pokemon: widget.pokemon),
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }

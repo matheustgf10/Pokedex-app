@@ -17,12 +17,7 @@ class AppModule extends Module {
   @override
   final List<ModularRoute> routes = [
     ModuleRoute(Modular.initialRoute, module: HomeModule()),
-    ModuleRoute(
-      '/pokedex',
-      module: PokedexModule(),
-    ),
-    // ChildRoute('/pokemonInfo',
-    //     child: (_, args) => PokemonInfoWidget(idHero: args.data)),
-    ModuleRoute('/pokemonInfo/', module: PokemonInfoModule()),
+    ModuleRoute('/pokedex', module: PokedexModule()),
+    ModuleRoute('/pokemonInfo', module: PokemonInfoModule()),
   ];
 }
